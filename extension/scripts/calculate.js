@@ -41,11 +41,12 @@ window.onload = () => {
                 let ans_idx = ans.findIndex(e => e.qNo === ele.qNo);
                 ans[ans_idx].correctAns = ele.correctAns;
                 ans[ans_idx].is_correct = ans[ans_idx].correctAns === ans[ans_idx].yourAns;
+                ans[ans_idx].answered = ans[ans_idx].yourAns !== '--';
 
                 if (ans[ans_idx].is_correct === true) {
                     plus_marks += score(ans[ans_idx].qNo);
                 } else {
-                    if (ans[ans_idx].qType !== 'MSQ' && ans[ans_idx].qType !== 'NAT') {
+                    if (ans[ans_idx].answered && ans[ans_idx].qType !== 'MSQ' && ans[ans_idx].qType !== 'NAT') {
                         minus_marks -= (1/3) * score(ans[ans_idx].qNo);
                     }
                 }
@@ -56,10 +57,11 @@ window.onload = () => {
                 for (let i = 0; i < 3; i++) {
                     let idx = Number(row.childNodes[3*i + 0].innerHTML);
                     if (idx !== 0) {
-                        row.childNodes[3*i + 0].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
-                        row.childNodes[3*i + 1].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
-                        row.childNodes[3*i + 2].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
-
+                        if (ans[idx - 1].answered) {
+                            row.childNodes[3*i + 0].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
+                            row.childNodes[3*i + 1].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
+                            row.childNodes[3*i + 2].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
+                        }
                         if (!ans[idx - 1].is_correct) {
                             row.childNodes[3*i + 1].innerHTML += `, correct ${ans[idx - 1].correctAns}`;
                         }
