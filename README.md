@@ -13,9 +13,13 @@
 
 OR
 
-watch this video: https://www.youtube.com/watch?v=WgPzONbViIA (thankyou GO Classes for the shouthout <3>)
+**watch this video:**
+
+[![video thumbnail](https://img.youtube.com/vi/WgPzONbViIA/0.jpg)](https://www.youtube.com/watch?v=WgPzONbViIA)
+
+(thank you GO Classes for the shoutout <3>)
 
 ## where are the answers from:
-the answers are scraped from the gate overflow website using scrape.py
+the answers are scraped from the gate overflow website using [scrape.py](./scrape.py)
 
-thanks to @priyavr.at (https://priyavr.at) for a fix on Jio networks
+thanks to [@priyavrat-misra](https://priyavr.at) for a fix on Jio networks
