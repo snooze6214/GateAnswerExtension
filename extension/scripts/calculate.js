@@ -34,7 +34,7 @@ window.onload = () => {
     });
     ans.pop();
 
-    fetch('https://raw.githubusercontent.com/snooze6214/GateAnswerExtension/main/answers.json')
+    fetch('https://raw.githack.com/snooze6214/GateAnswerExtension/main/answers.json')
         .then(res => res.json())
         .then(data => {
             data.forEach(ele => {
