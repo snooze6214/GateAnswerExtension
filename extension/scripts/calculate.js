@@ -4,16 +4,10 @@ window.onload = () => {
     let minus_marks = 0;
 
     const score = (qn_no) => {
-        if (qn_no >= 1 && qn_no <= 5)
+        if (qn_no >= 11 && qn_no <= 35 || qn_no >= 1 && qn_no <= 5)
             return 1;
         
-        if (qn_no >= 6 && qn_no <= 10)
-            return 2;
-        
-        if (qn_no >= 11 && qn_no <= 35)
-            return 1;
-        
-        if (qn_no >= 36 && qn_no <= 65)
+        if (qn_no >= 36 && qn_no <= 65 || qn_no >= 6 && qn_no <= 10)
             return 2;
         
         return 0;
