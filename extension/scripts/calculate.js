@@ -6,10 +6,10 @@ window.onload = () => {
     const score = (qn_no) => {
         if (qn_no >= 11 && qn_no <= 35 || qn_no >= 1 && qn_no <= 5)
             return 1;
-        
+
         if (qn_no >= 36 && qn_no <= 65 || qn_no >= 6 && qn_no <= 10)
             return 2;
-        
+
         return 0;
     }
 
@@ -20,9 +20,9 @@ window.onload = () => {
         row.childNodes.forEach(v => row_vals.push(v));
         for (let i = 0; i < 3; i++) {
             ans.push({
-                qNo: Number(row_vals[3*i + 0].innerHTML),
-                yourAns: row_vals[3*i + 1].innerHTML,
-                qType: row_vals[3*i + 2].innerHTML
+                qNo: Number(row_vals[3 * i + 0].innerHTML),
+                yourAns: row_vals[3 * i + 1].innerHTML,
+                qType: row_vals[3 * i + 2].innerHTML
             });
         }
     });
@@ -41,7 +41,7 @@ window.onload = () => {
                     plus_marks += score(ans[ans_idx].qNo);
                 } else {
                     if (ans[ans_idx].answered && ans[ans_idx].qType !== 'MSQ' && ans[ans_idx].qType !== 'NAT') {
-                        minus_marks -= (1/3) * score(ans[ans_idx].qNo);
+                        minus_marks -= (1 / 3) * score(ans[ans_idx].qNo);
                     }
                 }
             })
@@ -49,15 +49,15 @@ window.onload = () => {
 
             result_rows.forEach(row => {
                 for (let i = 0; i < 3; i++) {
-                    let idx = Number(row.childNodes[3*i + 0].innerHTML);
+                    let idx = Number(row.childNodes[3 * i + 0].innerHTML);
                     if (idx !== 0) {
                         if (ans[idx - 1].answered) {
-                            row.childNodes[3*i + 0].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
-                            row.childNodes[3*i + 1].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
-                            row.childNodes[3*i + 2].style.background = (ans[idx - 1].is_correct)? 'green' : 'red';
+                            row.childNodes[3 * i + 0].style.background = (ans[idx - 1].is_correct) ? 'green' : 'red';
+                            row.childNodes[3 * i + 1].style.background = (ans[idx - 1].is_correct) ? 'green' : 'red';
+                            row.childNodes[3 * i + 2].style.background = (ans[idx - 1].is_correct) ? 'green' : 'red';
                         }
                         if (!ans[idx - 1].is_correct) {
-                            row.childNodes[3*i + 1].innerHTML += `, correct ${ans[idx - 1].correctAns}`;
+                            row.childNodes[3 * i + 1].innerHTML += `, correct ${ans[idx - 1].correctAns}`;
                         }
                     }
                 }
@@ -71,7 +71,32 @@ window.onload = () => {
                 Incorrect marks: ${minus_marks},
                 Total marks: ${plus_marks + minus_marks}
                 `;
-                above_table_text[0].insertAdjacentElement("beforebegin",mark_display);
+                above_table_text[0].insertAdjacentElement("beforebegin", mark_display);
             }
         });
+
+
+
+    // FIXME: Add proper URL.
+    ans_stringified = JSON.stringify(ans);
+    fetch('<baseURL>/user-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "enr_id": document.getElementById("logged-in-as").innerText, "response": ans_stringified })
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+
 };
