@@ -81,5 +81,9 @@ for link in go_links:
     correct_ans.append({"qNo": i, "correctAns": ans_btn[0].getText()})
     i += 1
 
+# For compatibility with old version of the extension
 with open('answers.json', 'w') as file:
+    file.write(json.dumps(correct_ans))
+
+with open('answers_CS.json', 'w') as file:
     file.write(json.dumps(correct_ans))
